@@ -1,15 +1,80 @@
 {% extends "base.html" %}
 
+{% block title %}DjangoBlog — 分享技術，記錄生活{% endblock %}
+
 {% block content %}
-    <h1>welcome to Django Blog!</h1>
-    <hr />
-    {{ posts }} 
-    {% for post in posts %}
-        <h2>{{ post.title }}</h2>
-        <small>{{ post.content }}</small>
-        <h6>{{ post.slug }}</h6>
-        <small>{{ now|date:"Y-m-d" }}</small>
-        <hr />
-    {% endfor %}
-    
+<section class="hero" aria-labelledby="hero-title">
+    <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+        <p class="eyebrow"><span></span> Welcome to my digital garden</p>
+        <h1 id="hero-title">寫下思考，<br><span>留下成長軌跡。</span></h1>
+        <p class="hero-copy">這裡收藏開發筆記、實作心得與生活靈感。<br>把複雜的問題，整理成清楚且值得重讀的內容。</p>
+        <div class="hero-actions">
+            <a class="button button-primary" href="#articles">開始閱讀 <span aria-hidden="true">↓</span></a>
+            <a class="button button-secondary" href="/admin/">撰寫文章 <span aria-hidden="true">↗</span></a>
+        </div>
+    </div>
+    <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit-ring orbit-ring-one"></div>
+        <div class="orbit-ring orbit-ring-two"></div>
+        <div class="orbit-core">D<span>jango</span></div>
+    </div>
+</section>
+
+<section class="intro" id="about" aria-labelledby="about-title">
+    <div class="section-shell intro-grid">
+        <div>
+            <p class="section-kicker">About this blog</p>
+            <h2 id="about-title">好內容不只是答案，<br>也是思考的過程。</h2>
+        </div>
+        <div class="intro-copy">
+            <p>DjangoBlog 是一個持續生長的個人知識庫，記錄從問題發生、探索到解決的完整路徑。</p>
+            <div class="topic-list" aria-label="內容主題">
+                <span>Django</span><span>Python</span><span>Web Development</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="articles-section" id="articles" aria-labelledby="articles-title">
+    <div class="section-shell">
+        <div class="section-heading">
+            <div>
+                <p class="section-kicker">Latest writing</p>
+                <h2 id="articles-title">最新文章</h2>
+            </div>
+            <p>近期發布的開發筆記與想法</p>
+        </div>
+
+        {% if posts %}
+        <div class="article-grid">
+            {% for post in posts %}
+            <article class="article-card">
+                <div class="card-visual visual-{{ forloop.counter|add:'-1' }}" aria-hidden="true">
+                    <span class="card-index">0{{ forloop.counter }}</span>
+                    <span class="card-symbol">{% cycle '&lt;/&gt;' '{ }' '#_' '()' '::' '01' %}</span>
+                </div>
+                <div class="article-body">
+                    <div class="article-meta">
+                        <time datetime="{{ post.pub_date|date:'c' }}">{{ post.pub_date|date:"Y.m.d" }}</time>
+                        <span>{{ post.slug|default:"article" }}</span>
+                    </div>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content|striptags|truncatechars:115 }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <span aria-hidden="true">✦</span>
+            <h3>第一篇文章正在醞釀中</h3>
+            <p>從管理後台建立文章後，內容就會出現在這裡。</p>
+            <a class="button button-primary" href="/admin/">前往管理後台</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}
