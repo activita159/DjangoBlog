@@ -1,6 +1,5 @@
 
-set "GIT_USER_NAME=Allen"
-set "GIT_USER_EMAIL=activita159@gmail.com"
+
 
 #!/usr/bin/env bash
 # =====================================================================
